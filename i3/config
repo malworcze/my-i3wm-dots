@@ -1,0 +1,43 @@
+include $HOME/.config/i3/workspaces.conf
+include $HOME/.config/i3/rules.conf
+
+set $mod Mod4
+font pango:JetBrainsMono Nerd Font 12
+
+# Color scheme: Warm Touhou Gold & Deep Charcoal
+# class                 border  backgr. text    indicator child_border
+client.focused          #f5c242 #d29922 #1a1a1a #d29922   #d29922
+client.focused_inactive #2d231a #2d231a #888888 #2d231a   #2d231a
+client.unfocused        #1a1a1a #1a1a1a #FFFFFF #1a1a1a   #1a1a1a
+client.urgent           #eb4d4b #eb4d4b #ffffff #eb4d4b   #eb4d4b
+client.placeholder      #1a1a1a #1a1a1a #FFFFFF #1a1a1a   #1a1a1a
+client.background       #1a1a1a
+
+# Set the thickness to exactly 2 pixels
+default_border pixel 2
+default_floating_border pixel 2
+
+# This ensures that even if a window tries to override it, it stays 2px
+for_window [class=".*"] border pixel 2
+
+# The 'Smart' logic you wanted (No border if only one window)
+smart_borders on
+
+# Toggle gaps on/off (Sets to 0, or restores to your default)
+# Replace 'mod' with your modifier (e.g., Mod4 or Mod1)
+bindsym $mod+Shift+g gaps inner current set 0; gaps outer current set 0
+bindsym $mod+g gaps inner current set 10; gaps outer current set 10
+
+# Gaps
+gaps top 30
+
+# Add padding to window titles
+for_window [class=".*"] title_format "  %title"
+
+exec_always --no-startup-id ~/.config/i3/scripts/autostart.sh
+exec_always for id in $(xinput list | grep "pointer" | cut -d '=' -f 2 | cut -f 1); do xinput --set-prop "12" 'libinput Accel Profile Enabled' 0, 1; done
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+for_window [class="Rofi"] floating enable

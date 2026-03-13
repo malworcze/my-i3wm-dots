@@ -1,0 +1,12 @@
+#!/bin/bash
+DIR="$HOME/wallpapers"
+ROFI_THEME="$HOME/.config/i3/rofi/power.rasi"
+
+# List wallpapers and feed to rofi
+FILE=$(ls "$DIR" | rofi -dmenu -i -p "Wallpaper" \
+    -line-padding 4 -hide-scrollbar -theme "$ROFI_THEME")
+
+# Set the wallpaper
+if [ -n "$FILE" ]; then
+    feh --bg-fill "$DIR/$FILE"
+fi
